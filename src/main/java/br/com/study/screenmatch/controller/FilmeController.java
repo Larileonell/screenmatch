@@ -16,9 +16,13 @@ public class FilmeController {
 
     private List<Filme> filmes = new ArrayList<>();
 
-    @GetMapping
+    @GetMapping("/formulario")
     public String carregaPaginaFormulario(){
     return "filmes/formulario";
+    }
+    @GetMapping
+    public String carregaPaginaListagem(){
+        return "filmes/listagem";
     }
     @PostMapping
     public String cadastraFilme(DadosCadastroFilmes dados){
