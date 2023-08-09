@@ -2,6 +2,7 @@ package br.com.study.screenmatch.controller;
 
 import br.com.study.screenmatch.domain.filmes.DadosCadastroFilmes;
 import br.com.study.screenmatch.domain.filmes.Filme;
+import br.com.study.screenmatch.domain.filmes.FilmeRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/filmes")
 public class FilmeController {
 
-    private List<Filme> filmes = new ArrayList<>();
+    private FilmeRepository repository;
 
     @GetMapping("/formulario")
     public String carregaPaginaFormulario(){
@@ -23,13 +24,13 @@ public class FilmeController {
     }
     @GetMapping
     public String carregaPaginaListagem(Model model){
-        model.addAttribute("lista", filmes);
+        model.addAttribute("lista", repository.findAll());
         return "filmes/listagem";
     }
     @PostMapping
     public String cadastraFilme(DadosCadastroFilmes dados){
        var filme = new Filme(dados);
-       filmes.add(filme);
+       repository.save(filme);
 
 
         return "redirect:/filmes";
